@@ -1,9 +1,9 @@
-import z from 'zod';
+import * as z from 'zod';
 
 export const RegisterValidation = z
   .object({
-    firstName: z.string(),
-    lastName: z.string(),
+    firstName: z.string().min(1, 'Заповніть поле'),
+    lastName: z.string().min(1, 'Заповніть поле'),
     email: z.email('Невірна пошта'),
     password: z
       .string()
