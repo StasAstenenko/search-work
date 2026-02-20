@@ -1,9 +1,11 @@
 'use client';
 
+import { registerService } from '@/services/auth.services';
 import { RegisterProps } from '@/types/Register.types';
 import { RegisterValidation } from '@/validation/Register.validation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
 const RegisterComponent = () => {
@@ -11,12 +13,21 @@ const RegisterComponent = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<RegisterProps>({
     resolver: zodResolver(RegisterValidation),
   });
 
-  const onSubmit = (data: RegisterProps) => {
-    console.log(data);
+  const route = useRouter();
+
+  const onSubmit = async (data: RegisterProps) => {
+    try {
+      await registerService(data);
+      route.push('/dashboard');
+      reset();
+    } catch (error) {
+      return error;
+    }
   };
 
   return (

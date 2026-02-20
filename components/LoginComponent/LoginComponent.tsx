@@ -1,9 +1,11 @@
 'use client';
 
+import { loginService } from '@/services/auth.services';
 import { LoginProps } from '@/types/Register.types';
 import { LoginValidation } from '@/validation/Login.validation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
 const LoginComponent = () => {
@@ -15,8 +17,15 @@ const LoginComponent = () => {
     resolver: zodResolver(LoginValidation),
   });
 
-  const onSubmit = (data: LoginProps) => {
-    console.log(data);
+  const router = useRouter();
+
+  const onSubmit = async (data: LoginProps) => {
+    try {
+      await loginService(data);
+      router.push('/dashboard');
+    } catch (error) {
+      return error;
+    }
   };
 
   return (
