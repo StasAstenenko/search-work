@@ -15,7 +15,6 @@ export const registerService = async (
     },
   });
 
-  console.log(userData);
   return userData;
 };
 
@@ -25,6 +24,11 @@ export const loginService = async ({ email, password }: LoginProps) => {
     password,
   });
 
+  return data;
+};
+
+export const getUser = async () => {
+  const { data } = await supabase.auth.getUser();
   console.log(data);
 
   return data;
