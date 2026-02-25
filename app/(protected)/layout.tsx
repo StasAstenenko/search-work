@@ -1,5 +1,6 @@
 import Header from '@/components/Header/Header';
 import Protected from '@/components/Protected/Protected';
+import TanstackQueryProvider from '@/components/TanstackQueryProvider/TanstackQueryProvider';
 
 export default function ProtectedLayout({
   children,
@@ -8,8 +9,10 @@ export default function ProtectedLayout({
 }) {
   return (
     <Protected>
-      <Header />
-      {children}
+      <TanstackQueryProvider>
+        <Header />
+        {children}
+      </TanstackQueryProvider>
     </Protected>
   );
 }
