@@ -21,16 +21,17 @@ const RadioButtonSearch = ({
   return (
     <label
       className={`
-        flex items-center justify-between p-3 rounded-xl cursor-pointer
-        border transition-all duration-300
-        ${
-          isActive
-            ? 'bg-black text-white border-black scale-[1.02]'
-            : 'bg-white hover:bg-black hover:text-white hover:scale-[1.02]'
-        }
-      `}
+    flex items-center justify-between px-4 py-3 rounded-xl cursor-pointer
+    border text-sm font-medium
+    transition-all duration-300
+    ${
+      isActive
+        ? 'bg-black text-white border-black shadow-md'
+        : 'bg-white hover:bg-black hover:text-white hover:shadow-md'
+    }
+  `}
     >
-      <span className='font-medium text-sm'>{label}</span>
+      <span>{label}</span>
 
       <input
         type='radio'
@@ -42,13 +43,9 @@ const RadioButtonSearch = ({
 
       <div
         className={`
-          w-4 h-4 rounded-full border-2 transition-all duration-300
-          ${
-            isActive
-              ? 'bg-white border-white'
-              : 'border-black group-hover:border-white'
-          }
-        `}
+      w-4 h-4 rounded-full border-2 transition-all duration-300
+      ${isActive ? 'bg-white border-white' : 'border-black'}
+    `}
       />
     </label>
   );
