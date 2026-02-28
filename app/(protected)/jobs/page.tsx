@@ -1,5 +1,5 @@
-const Jobs = () => {
-  return <div>jobs</div>;
-};
+import { redirect } from 'next/navigation';
 
-export default Jobs;
+export default function JobsIndex() {
+  redirect('/jobs/us/1');
+}

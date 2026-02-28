@@ -17,6 +17,6 @@ export const getNews = async (): Promise<Article[]> => {
 
     return data.articles;
   } catch (error) {
-    throw new Error(error);
+    throw new Error('Some error...', { cause: error });
   }
 };
