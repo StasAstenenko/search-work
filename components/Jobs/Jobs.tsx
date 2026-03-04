@@ -8,7 +8,8 @@ import Loader from '@/components/Loader/Loader';
 import RadioButtonSearch from '../RadioButtonSearch/RadioButtonSearch';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '../ui/button';
-import { Filter } from 'lucide-react';
+import Select from '../Select/Select';
+import { COUNTRIES } from '@/constant/constants';
 
 interface JobsProps {
   country: string;
@@ -27,7 +28,11 @@ const JobsComponent = ({ country, page }: JobsProps) => {
   } = useQuery({
     queryKey: ['jobs', { country, page, searchCategory }],
     queryFn: () =>
-      getJobs({ country, page: Number(page), category: searchCategory }),
+      getJobs({
+        country,
+        page: Number(page),
+        category: searchCategory,
+      }),
   });
 
   const { data: category } = useQuery({
@@ -54,6 +59,14 @@ const JobsComponent = ({ country, page }: JobsProps) => {
       <div className='max-w-7xl mx-auto flex gap-8'>
         {/* 🔥 Sidebar */}
         <aside className='hidden lg:block w-80'>
+          <Select
+            label='Країна'
+            items={COUNTRIES}
+            value={country}
+            getValue={(c) => c.code}
+            getLabel={(c) => c.name}
+            onChange={(code) => router.push(`/jobs/${code}/1`)}
+          />
           <div className='top-28 bg-white/90 backdrop-blur-xl border border-black/10 rounded-2xl shadow-xl p-6 space-y-4'>
             <h3 className='text-xl font-bold mb-4'>Категорії</h3>
 

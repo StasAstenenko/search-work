@@ -28,7 +28,11 @@ const Jobs = async ({ params, searchParams }: JobsProps) => {
     queryClient.prefetchQuery({
       queryKey: ['jobs', { country, page, searchCategory }],
       queryFn: () =>
-        getJobs({ country, page: Number(page), category: searchCategory }),
+        getJobs({
+          country,
+          page: Number(page),
+          category: searchCategory,
+        }),
       staleTime: FIVE_MINUTES,
     }),
 
