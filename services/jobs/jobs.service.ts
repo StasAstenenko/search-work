@@ -6,25 +6,26 @@ interface Props {
   country: string;
   page: number;
   category: string | null;
+  sort_by: string | null;
 }
 
 const instant = axios.create({
-  baseURL: 'https://api.adzuna.com/v1/api/',
-  params: {
-    app_id: JOBS_ID,
-    app_key: JOBS_APP_KEY,
-  },
+  baseURL: '/api',
 });
 
 export const getJobs = async ({
   country,
   page,
   category,
+  sort_by,
 }: Props): Promise<Jobs> => {
   try {
-    const { data } = await instant.get<Jobs>(`jobs/${country}/search/${page}`, {
+    const { data } = await instant.get<Jobs>(`/jobs`, {
       params: {
+        country,
+        page,
         category,
+        sort_by,
       },
     });
 
@@ -40,9 +41,11 @@ export const getJobsCategory = async (
   country: string
 ): Promise<CategoryResult> => {
   try {
-    const { data } = await instant.get<CategoryResult>(
-      `jobs/${country}/categories`
-    );
+    const { data } = await instant.get<CategoryResult>(`/category`, {
+      params: {
+        country,
+      },
+    });
 
     console.log(data);
 

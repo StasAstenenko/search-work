@@ -9,7 +9,7 @@ import RadioButtonSearch from '../RadioButtonSearch/RadioButtonSearch';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '../ui/button';
 import Select from '../Select/Select';
-import { COUNTRIES } from '@/constant/constants';
+import { COUNTRIES, SORT_BY } from '@/constant/constants';
 
 interface JobsProps {
   country: string;
@@ -20,18 +20,20 @@ const JobsComponent = ({ country, page }: JobsProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const searchCategory = searchParams.get('category');
+  const sort_by = searchParams.get('sort_by') ?? '';
 
   const {
     data: jobs,
     isLoading,
     error,
   } = useQuery({
-    queryKey: ['jobs', { country, page, searchCategory }],
+    queryKey: ['jobs', country, page, searchCategory, sort_by],
     queryFn: () =>
       getJobs({
         country,
         page: Number(page),
         category: searchCategory,
+        sort_by,
       }),
   });
 
@@ -67,18 +69,36 @@ const JobsComponent = ({ country, page }: JobsProps) => {
             getLabel={(c) => c.name}
             onChange={(code) => router.push(`/jobs/${code}/1`)}
           />
+          <div>
+            <Select
+              label='Сортування'
+              items={SORT_BY}
+              value={sort_by}
+              getValue={(s) => s.key}
+              getLabel={(s) => s.value}
+              onChange={(sorted) => {
+                const params = new URLSearchParams(searchParams.toString());
+                params.set('sort_by', sorted);
+
+                router.push(`/jobs/${country}/1?${params.toString()}`);
+              }}
+            />
+          </div>
           <div className='top-28 bg-white/90 backdrop-blur-xl border border-black/10 rounded-2xl shadow-xl p-6 space-y-4'>
             <h3 className='text-xl font-bold mb-4'>Категорії</h3>
 
             <div className='space-y-2 max-h-[55vh] overflow-y-auto pr-2'>
-              {category?.results.map((result, indx) => (
+              {category?.results?.map((result, indx) => (
                 <RadioButtonSearch
                   key={indx}
                   label={result.label}
                   tag={result.tag}
-                  onChange={() =>
-                    router.push(`/jobs/${country}/1?category=${result.tag}`)
-                  }
+                  onChange={() => {
+                    const params = new URLSearchParams(searchParams.toString());
+                    params.set('category', result.tag);
+
+                    router.push(`/jobs/${country}/1?${params.toString()}`);
+                  }}
                 />
               ))}
             </div>

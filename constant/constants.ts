@@ -1,4 +1,5 @@
 import { Country } from '@/types/Country.type';
+import { SortBy } from '@/types/Sorted.type';
 
 export const NEWS_API_KEY = process.env.NEXT_PUBLIC_NEWS_API_KEY!;
 
@@ -86,5 +87,28 @@ export const COUNTRIES: Country[] = [
   {
     code: 'za',
     name: 'Південно-Африканська Республіка',
+  },
+];
+
+export const SORT_BY: SortBy[] = [
+  {
+    key: 'default',
+    value: '',
+  },
+  {
+    key: 'hybrid',
+    value: 'Гібрид',
+  },
+  {
+    key: 'date',
+    value: 'Дата',
+  },
+  {
+    key: 'salary',
+    value: 'Зарплата',
+  },
+  {
+    key: 'relevance',
+    value: 'Релевантність',
   },
 ];

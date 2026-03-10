@@ -11,7 +11,7 @@ const JobsList = ({ results }: JobsListProps) => {
       className='grid gap-8 sm:grid-cols-2 lg:grid-cols-3 
     max-w-7xl mx-auto animate-fadeIn'
     >
-      {results.map((el) => (
+      {results?.map((el) => (
         <li key={el.id}>
           <JobsCard result={el} />
         </li>
