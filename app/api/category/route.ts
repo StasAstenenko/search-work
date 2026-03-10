@@ -1,3 +1,4 @@
+import { JOBS_APP_KEY, JOBS_ID } from '@/constant/constants';
 import { NextRequest } from 'next/server';
 
 export async function GET(req: NextRequest) {
@@ -9,8 +10,8 @@ export async function GET(req: NextRequest) {
     `https://api.adzuna.com/v1/api/jobs/${country}/categories`
   );
 
-  url.searchParams.set('app_id', process.env.NEXT_PUBLIC_JOBS_APP_ID!);
-  url.searchParams.set('app_key', process.env.NEXT_PUBLIC_JOBS_APP_KEY!);
+  url.searchParams.set('app_id', JOBS_ID);
+  url.searchParams.set('app_key', JOBS_APP_KEY);
 
   const res = await fetch(url.toString());
 
