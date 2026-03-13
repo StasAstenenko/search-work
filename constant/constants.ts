@@ -92,14 +92,6 @@ export const COUNTRIES: Country[] = [
 
 export const SORT_BY: SortBy[] = [
   {
-    key: 'default',
-    value: '',
-  },
-  {
-    key: 'hybrid',
-    value: 'Гібрид',
-  },
-  {
     key: 'date',
     value: 'Дата',
   },

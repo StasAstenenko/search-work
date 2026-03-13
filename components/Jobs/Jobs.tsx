@@ -10,6 +10,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '../ui/button';
 import Select from '../Select/Select';
 import { COUNTRIES, SORT_BY } from '@/constant/constants';
+import { useState } from 'react';
+import Input from '../Input/Input';
 
 interface JobsProps {
   country: string;
@@ -18,22 +20,36 @@ interface JobsProps {
 
 const JobsComponent = ({ country, page }: JobsProps) => {
   const router = useRouter();
+  const [minSalaryInput, setMinSalaryInput] = useState(0);
+  const [maxSalaryInput, setMaxSalaryInput] = useState(0);
   const searchParams = useSearchParams();
   const searchCategory = searchParams.get('category');
-  const sort_by = searchParams.get('sort_by') ?? '';
+  const sort_by = searchParams.get('sort_by');
+  const salary_max = searchParams.get('salary_max');
+  const salary_min = searchParams.get('salary_min');
 
   const {
     data: jobs,
     isLoading,
     error,
   } = useQuery({
-    queryKey: ['jobs', country, page, searchCategory, sort_by],
+    queryKey: [
+      'jobs',
+      country,
+      page,
+      searchCategory,
+      sort_by,
+      salary_max,
+      salary_min,
+    ],
     queryFn: () =>
       getJobs({
         country,
         page: Number(page),
         category: searchCategory,
         sort_by,
+        salary_max: Number(salary_max),
+        salary_min: Number(salary_min),
       }),
   });
 
@@ -41,6 +57,19 @@ const JobsComponent = ({ country, page }: JobsProps) => {
     queryKey: ['categories', country],
     queryFn: () => getJobsCategory(country),
   });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (maxSalaryInput > 0 && maxSalaryInput >= minSalaryInput)
+      params.set('salary_max', maxSalaryInput.toString());
+
+    if (minSalaryInput > 0) params.set('salary_min', minSalaryInput.toString());
+
+    router.push(`/jobs/${country}/1?${params.toString()}`);
+  };
 
   if (isLoading) return <Loader />;
 
@@ -84,6 +113,23 @@ const JobsComponent = ({ country, page }: JobsProps) => {
               }}
             />
           </div>
+          <form onSubmit={handleSubmit} className='mb-6'>
+            <Input
+              type='number'
+              label='Мінімальна зарплата'
+              placeholder='Наприклад 2000'
+              onChange={(val) => setMinSalaryInput(Number(val))}
+            />
+
+            <Input
+              type='number'
+              label='Максимальна зарплата'
+              placeholder='Наприклад 8000'
+              onChange={(val) => setMaxSalaryInput(Number(val))}
+            />
+
+            <Button className='w-full mt-2 cursor-pointer'>Пошук</Button>
+          </form>
           <div className='top-28 bg-white/90 backdrop-blur-xl border border-black/10 rounded-2xl shadow-xl p-6 space-y-4'>
             <h3 className='text-xl font-bold mb-4'>Категорії</h3>
 
@@ -117,11 +163,7 @@ const JobsComponent = ({ country, page }: JobsProps) => {
           <JobsList results={jobs.results} />
 
           <div className='flex justify-center pt-8'>
-            <JobsNextPage
-              country={country}
-              page={Number(page)}
-              category={searchCategory}
-            />
+            <JobsNextPage country={country} page={Number(page)} />
           </div>
         </section>
       </div>

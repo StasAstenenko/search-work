@@ -1,4 +1,3 @@
-import { JOBS_APP_KEY, JOBS_ID } from '@/constant/constants';
 import { CategoryResult, Jobs } from '@/types/Jobs.type';
 import axios from 'axios';
 
@@ -7,6 +6,8 @@ interface Props {
   page: number;
   category: string | null;
   sort_by: string | null;
+  salary_min: number | null;
+  salary_max: number | null;
 }
 
 const instant = axios.create({
@@ -18,6 +19,8 @@ export const getJobs = async ({
   page,
   category,
   sort_by,
+  salary_max,
+  salary_min,
 }: Props): Promise<Jobs> => {
   try {
     const { data } = await instant.get<Jobs>(`/jobs`, {
@@ -26,6 +29,8 @@ export const getJobs = async ({
         page,
         category,
         sort_by,
+        salary_max,
+        salary_min,
       },
     });
 

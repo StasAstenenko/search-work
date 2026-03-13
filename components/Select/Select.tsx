@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 interface SelectProps<T> {
   items: T[];
-  value: string;
+  value: string | null;
   getValue: (item: T) => string;
   getLabel: (item: T) => string;
   onChange: (value: string) => void;

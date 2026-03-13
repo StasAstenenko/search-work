@@ -8,6 +8,8 @@ export async function GET(req: NextRequest) {
   const page = params.get('page');
   const category = params.get('category');
   const sort_by = params.get('sort_by');
+  const salary_min = params.get('salary_min');
+  const salary_max = params.get('salary_max');
 
   const url = new URL(
     `https://api.adzuna.com/v1/api/jobs/${country}/search/${page}`
@@ -18,6 +20,8 @@ export async function GET(req: NextRequest) {
 
   if (category) url.searchParams.set('category', category);
   if (sort_by) url.searchParams.set('sort_by', sort_by);
+  if (salary_max) url.searchParams.set('salary_max', salary_max);
+  if (salary_min) url.searchParams.set('salary_min', salary_min);
 
   const res = await fetch(url.toString());
 
