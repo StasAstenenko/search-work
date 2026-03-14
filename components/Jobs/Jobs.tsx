@@ -82,8 +82,8 @@ const JobsComponent = ({ country, page }: JobsProps) => {
   }
 
   return (
-    <main className='min-h-screen bg-gradient-to-br from-amber-200 via-yellow-100 to-orange-300 px-6 py-12'>
-      <h1 className='text-4xl font-bold text-center mb-12 bg-gradient-to-r from-amber-600 to-orange-500 bg-clip-text text-transparent'>
+    <main className='min-h-screen bg-linear-to-br from-amber-200 via-yellow-100 to-orange-300 px-6 py-12'>
+      <h1 className='text-4xl font-bold text-center mb-12 bg-linear-to-r from-amber-600 to-orange-500 bg-clip-text text-transparent'>
         Вакансії
       </h1>
 

@@ -1,4 +1,7 @@
+import { HistogramResponse } from '@/types/Histogram.type';
+import { History } from '@/types/HIstory.type';
 import { CategoryResult, Jobs } from '@/types/Jobs.type';
+import { TopCompanies } from '@/types/TopCompanies.type';
 import axios from 'axios';
 
 interface Props {
@@ -34,8 +37,6 @@ export const getJobs = async ({
       },
     });
 
-    console.log(data);
-
     return data;
   } catch (error) {
     throw new Error('Some error...', { cause: error });
@@ -52,9 +53,60 @@ export const getJobsCategory = async (
       },
     });
 
-    console.log(data);
+    return data;
+  } catch (error) {
+    throw new Error('Some error...', { cause: error });
+  }
+};
+
+export const getHistogram = async (country: string) => {
+  try {
+    const { data } = await instant.get<HistogramResponse>('/stats', {
+      params: {
+        country,
+      },
+    });
+
+    return Object.entries(data.histogram).map(([salary, count]) => ({
+      salary: Number(salary),
+      count: Number(count),
+    }));
+  } catch (error) {
+    throw new Error('Some error...', { cause: error });
+  }
+};
+
+export const getTopCompanies = async (
+  country: string
+): Promise<TopCompanies> => {
+  try {
+    const { data } = await instant.get<TopCompanies>('/top_company', {
+      params: {
+        country,
+      },
+    });
 
     return data;
+  } catch (error) {
+    throw new Error('Some error...', { cause: error });
+  }
+};
+
+export const getHistory = async (country: string) => {
+  try {
+    const { data } = await instant.get<History>('/history', {
+      params: {
+        country,
+      },
+    });
+    console.log(data);
+
+    return Object.entries(data.month)
+      .map(([date, salary]) => ({
+        date: date.toString(),
+        salary: Number(salary),
+      }))
+      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
   } catch (error) {
     throw new Error('Some error...', { cause: error });
   }

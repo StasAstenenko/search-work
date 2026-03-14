@@ -1,5 +1,5 @@
-const Stats = () => {
-  return <div>Stats</div>;
-};
+import { redirect } from 'next/navigation';
 
-export default Stats;
+export default function StatsIndex() {
+  redirect('/stats/us');
+}
