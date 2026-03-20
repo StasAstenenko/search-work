@@ -1,9 +1,7 @@
 'use client';
 
 import { getUser } from '@/services/auth.services';
-import { type User } from '@supabase/supabase-js';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 import { Button } from '../ui/button';
 import {
   Briefcase,
@@ -13,19 +11,17 @@ import {
   User as UserIcon,
   ChevronDown,
 } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 
 const Header = () => {
-  const [user, setUser] = useState<User>();
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const { user } = await getUser();
-      if (user) setUser(user);
-    };
-
-    fetchUser();
-  }, []);
+  const { data } = useQuery({
+    queryKey: ['me'],
+    queryFn: getUser,
+    refetchOnWindowFocus: false,
+  });
 
   return (
     <header
@@ -75,7 +71,7 @@ const Header = () => {
         >
           <UserIcon size={18} />
           <span className='text-sm'>
-            {user?.user_metadata.first_name} {user?.user_metadata.last_name}
+            {data?.user?.firstName} {data?.user?.lastName}
           </span>
           <ChevronDown
             size={16}

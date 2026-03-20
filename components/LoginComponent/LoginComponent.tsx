@@ -4,6 +4,7 @@ import { loginService } from '@/services/auth.services';
 import { LoginProps } from '@/types/Register.types';
 import { LoginValidation } from '@/validation/Login.validation';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
@@ -17,15 +18,21 @@ const LoginComponent = () => {
     resolver: zodResolver(LoginValidation),
   });
 
+  const queryClient = useQueryClient();
+
   const router = useRouter();
 
-  const onSubmit = async (data: LoginProps) => {
-    try {
-      await loginService(data);
+  const loginMutation = useMutation({
+    mutationFn: loginService,
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['me'] });
       router.push('/dashboard');
-    } catch (error) {
-      return error;
-    }
+    },
+  });
+
+  const onSubmit = async (data: LoginProps) => {
+    loginMutation.mutate(data);
   };
 
   return (

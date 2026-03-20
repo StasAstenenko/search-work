@@ -4,6 +4,7 @@ import { registerService } from '@/services/auth.services';
 import { RegisterProps } from '@/types/Register.types';
 import { RegisterValidation } from '@/validation/Register.validation';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
@@ -18,12 +19,24 @@ const RegisterComponent = () => {
     resolver: zodResolver(RegisterValidation),
   });
 
+  const queryClient = useQueryClient();
+
   const route = useRouter();
+
+  const registerMutation = useMutation({
+    mutationFn: registerService,
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['me'],
+      });
+      route.push('/dashboard');
+    },
+  });
 
   const onSubmit = async (data: RegisterProps) => {
     try {
-      await registerService(data);
-      route.push('/dashboard');
+      registerMutation.mutate(data);
       reset();
     } catch (error) {
       return error;

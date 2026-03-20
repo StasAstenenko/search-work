@@ -1,20 +1,15 @@
-import { supabase } from '@/lib/supabase';
 import { LoginProps, RegisterProps, UserData } from '@/types/Register.types';
+import axios from 'axios';
+
+const instant = axios.create({
+  baseURL: '/api/auth',
+});
 
 export const registerService = async (
   data: RegisterProps
 ): Promise<UserData> => {
   try {
-    const { data: userData } = await supabase.auth.signUp({
-      email: data.email,
-      password: data.password,
-      options: {
-        data: {
-          first_name: data.firstName,
-          last_name: data.lastName,
-        },
-      },
-    });
+    const { data: userData } = await instant.post<UserData>('/register', data);
 
     return userData;
   } catch (error) {
@@ -22,22 +17,21 @@ export const registerService = async (
   }
 };
 
-export const loginService = async ({ email, password }: LoginProps) => {
+export const loginService = async (data: LoginProps): Promise<UserData> => {
   try {
-    const { data } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    const { data: userData } = await instant.post<UserData>('/login', data);
 
-    return data;
+    return userData;
   } catch (error) {
     throw new Error('Some error...', { cause: error });
   }
 };
 
-export const getUser = async () => {
+export const getUser = async (): Promise<UserData> => {
   try {
-    const { data } = await supabase.auth.getUser();
+    const { data } = await instant.get<UserData>('/me');
+
+    console.log(data);
 
     return data;
   } catch (error) {
