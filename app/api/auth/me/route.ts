@@ -1,6 +1,5 @@
 import { prisma } from '@/lib/prisma';
 import { createSupabaseServer } from '@/lib/server-supabase';
-import { User } from '@/types/Register.types';
 
 export async function GET() {
   const supabase = await createSupabaseServer();
@@ -13,9 +12,14 @@ export async function GET() {
 
   const user = data.user;
 
-  const userFromPrisma: User = await prisma.user.findUnique({
+  const userFromPrisma = await prisma.user.findUnique({
     where: { supabaseUserId: user.id },
+    include: { favorites: true },
   });
+
+  if (!userFromPrisma) {
+    return Response.json({ error: 'User not found' }, { status: 404 });
+  }
 
   return Response.json({ user: userFromPrisma });
 }

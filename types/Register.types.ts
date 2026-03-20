@@ -22,7 +22,7 @@ export interface User {
   age: number | null;
   gender: string | null;
   resumeUrl: string | null;
-  favorites: Favorites | null;
+  favorites: Favorites[] | null;
 }
 
 interface Favorites {

@@ -1,6 +1,5 @@
 import { prisma } from '@/lib/prisma';
 import { createSupabaseServer } from '@/lib/server-supabase';
-import { User } from '@/types/Register.types';
 import { NextRequest } from 'next/server';
 
 export async function POST(req: NextRequest) {
@@ -25,15 +24,24 @@ export async function POST(req: NextRequest) {
 
   const user = data.user;
 
-  const userFromPrisma: User = await prisma.user.upsert({
-    where: { supabaseUserId: user?.id },
+  if (!user) {
+    return Response.json({ error: 'User not found' }, { status: 404 });
+  }
+
+  if (!user.email) {
+    return Response.json({ error: 'User not found' }, { status: 404 });
+  }
+
+  const userFromPrisma = await prisma.user.upsert({
+    where: { supabaseUserId: user.id },
     update: {},
     create: {
-      supabaseUserId: user?.id,
-      email: user?.email,
+      supabaseUserId: user.id,
+      email: user.email,
       firstName,
       lastName,
     },
+    include: { favorites: true },
   });
 
   return Response.json({ user: userFromPrisma });
