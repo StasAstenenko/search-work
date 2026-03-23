@@ -1,11 +1,13 @@
 import { prisma } from '@/lib/prisma';
 import { createSupabaseServer } from '@/lib/server-supabase';
+import { RegisterProps } from '@/types/Register.types';
 import { NextRequest } from 'next/server';
 
 export async function POST(req: NextRequest) {
   const supabase = await createSupabaseServer();
 
-  const { email, password, firstName, lastName } = await req.json();
+  const { email, password, firstName, lastName } =
+    (await req.json()) as RegisterProps;
 
   const { data, error } = await supabase.auth.signUp({
     email,

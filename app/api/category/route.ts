@@ -15,8 +15,6 @@ export async function GET(req: NextRequest) {
 
   const res = await fetch(url.toString());
 
-  console.log(res);
-
   const data = await res.json();
 
   return Response.json(data);
