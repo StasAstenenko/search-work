@@ -1,4 +1,5 @@
 import { LoginProps, RegisterProps, UserData } from '@/types/Register.types';
+import { UpdateUser } from '@/validation/UpdateUser.validation';
 import axios from 'axios';
 
 const instant = axios.create({
@@ -31,9 +32,17 @@ export const getUser = async (): Promise<UserData> => {
   try {
     const { data } = await instant.get<UserData>('/me');
 
-    console.log(data);
-
     return data;
+  } catch (error) {
+    throw new Error('Some error...', { cause: error });
+  }
+};
+
+export const updateUser = async (data: UpdateUser): Promise<UserData> => {
+  try {
+    const { data: user } = await instant.patch<UserData>('/update-user', data);
+
+    return user;
   } catch (error) {
     throw new Error('Some error...', { cause: error });
   }

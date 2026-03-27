@@ -1,5 +1,7 @@
+import SettingsComponent from '@/components/Settings/SettingsComponent';
+
 const Settings = () => {
-  return <div>settings</div>;
+  return <SettingsComponent />;
 };
 
 export default Settings;

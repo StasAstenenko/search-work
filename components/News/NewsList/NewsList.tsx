@@ -33,11 +33,11 @@ const NewsList = () => {
   return (
     <main
       className='min-h-screen px-6 py-12 
-    bg-gradient-to-br from-amber-200 via-yellow-100 to-orange-300'
+    bg-linear-to-br from-amber-200 via-yellow-100 to-orange-300'
     >
       <h1
         className='text-4xl font-bold text-center mb-12
-      bg-gradient-to-r from-amber-600 to-orange-500 
+      bg-linear-to-r from-amber-600 to-orange-500 
       bg-clip-text text-transparent'
       >
         Останні новини

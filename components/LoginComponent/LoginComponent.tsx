@@ -38,7 +38,7 @@ const LoginComponent = () => {
   return (
     <main
       className='min-h-screen flex items-center justify-center 
-    bg-gradient-to-br from-amber-200 via-yellow-100 to-orange-300 px-4 relative'
+    bg-linear-to-br from-amber-200 via-yellow-100 to-orange-300 px-4 relative'
     >
       {/* 🔙 Back Arrow */}
       <Link
@@ -57,7 +57,7 @@ const LoginComponent = () => {
       >
         <h1
           className='text-3xl font-bold text-center mb-8 
-        bg-gradient-to-r from-amber-600 to-orange-500 
+        bg-linear-to-r from-amber-600 to-orange-500 
         bg-clip-text text-transparent'
         >
           Вхід в акаунт
@@ -119,7 +119,7 @@ const LoginComponent = () => {
           <button
             type='submit'
             className='w-full py-2 rounded-xl font-medium 
-            bg-gradient-to-r from-amber-500 to-orange-500 text-white 
+            bg-linear-to-r from-amber-500 to-orange-500 text-white 
             shadow-lg transition-all duration-300
             hover:scale-105 hover:shadow-xl active:scale-95'
           >

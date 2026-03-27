@@ -40,7 +40,7 @@ const JobsCard = ({ result }: JobsCardProps) => {
       {(result.salary_min || result.salary_max) && (
         <div
           className='mt-4 flex items-center gap-2 
-        bg-gradient-to-r from-amber-500 to-orange-500 
+        bg-linear-to-r from-amber-500 to-orange-500 
         text-white px-3 py-1 rounded-full text-sm w-fit'
         >
           <Banknote size={14} />
