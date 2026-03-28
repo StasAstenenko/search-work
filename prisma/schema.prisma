@@ -1,40 +1,37 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
-  url = env("DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
 
 model User {
-  id             String @id @default(cuid())
-  supabaseUserId String @unique
-  email          String @unique
-  
-  firstName      String 
+  id             String     @id @default(cuid())
+  supabaseUserId String     @unique
+  email          String     @unique
+  age            Int?
+  gender         String?
+  resumeUrl      String?
+  createdAt      DateTime   @default(now())
+  firstName      String
   lastName       String
-
-  age       Int?
-  gender    String?
-  resumeUrl String?
-
-  createdAt DateTime @default(now())
-
-  favorites Favorite[]
+  favorites      Favorite[]
 }
 
 model Favorite {
-  id    String @id @default(cuid())
-  jobId String
-
-  userId String
-  user   User   @relation(fields: [userId], references: [id])
+  id          String @id @default(cuid())
+  jobId       String
+  userId      String
+  category    String
+  companyName String
+  description String
+  maxSalary   Int?
+  minSalary   Int?
+  title       String
+  redirectUrl String?
+  user        User   @relation(fields: [userId], references: [id])
 
   @@unique([userId, jobId])
 }

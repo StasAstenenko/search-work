@@ -1,11 +1,16 @@
+'use client';
+
+import { useFavorite } from '@/hooks/favoriteHook';
 import { Results } from '@/types/Jobs.type';
 import { Building2, Briefcase, Banknote } from 'lucide-react';
+import Link from 'next/link';
 
 interface JobsCardProps {
   result: Results;
 }
 
 const JobsCard = ({ result }: JobsCardProps) => {
+  const { toggleFavorite, isFavorite } = useFavorite(result);
   return (
     <div
       className='group bg-white/90 backdrop-blur-xl
@@ -15,6 +20,9 @@ const JobsCard = ({ result }: JobsCardProps) => {
       hover:scale-105 hover:shadow-[0_20px_60px_rgba(0,0,0,0.25)]'
     >
       <div className='space-y-3'>
+        <button type='button' onClick={() => toggleFavorite(result)}>
+          Додати до улюблених або прибрати
+        </button>
         <div className='flex items-center gap-2 text-sm text-gray-600'>
           <Briefcase size={16} />
           <span>{result.category.label}</span>
@@ -47,6 +55,12 @@ const JobsCard = ({ result }: JobsCardProps) => {
           {result.salary_min ?? '—'} - {result.salary_max ?? '—'}
         </div>
       )}
+
+      <div>
+        {result.redirect_url && (
+          <Link href={result.redirect_url}>Перейти до вакансії</Link>
+        )}
+      </div>
     </div>
   );
 };

@@ -1,6 +1,7 @@
+import { Favorite } from '@/types/Favorite.type';
 import { HistogramResponse } from '@/types/Histogram.type';
 import { History } from '@/types/HIstory.type';
-import { CategoryResult, Jobs } from '@/types/Jobs.type';
+import { CategoryResult, Jobs, Results } from '@/types/Jobs.type';
 import { TopCompanies } from '@/types/TopCompanies.type';
 import axios from 'axios';
 
@@ -99,7 +100,6 @@ export const getHistory = async (country: string) => {
         country,
       },
     });
-    console.log(data);
 
     return Object.entries(data.month)
       .map(([date, salary]) => ({
@@ -107,6 +107,27 @@ export const getHistory = async (country: string) => {
         salary: Number(salary),
       }))
       .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  } catch (error) {
+    throw new Error('Some error...', { cause: error });
+  }
+};
+
+export const addToFavorite = async (job: Results) => {
+  try {
+    const { data } = await instant.post<Favorite>('/favorites/add', job);
+    return data;
+  } catch (error) {
+    throw new Error('Some error...', { cause: error });
+  }
+};
+
+export const deleteFavorite = async (id: string) => {
+  try {
+    const { data } = await instant.delete<boolean>('/favorites/delete', {
+      data: id,
+    });
+
+    return data;
   } catch (error) {
     throw new Error('Some error...', { cause: error });
   }

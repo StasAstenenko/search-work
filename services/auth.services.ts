@@ -32,6 +32,8 @@ export const getUser = async (): Promise<UserData> => {
   try {
     const { data } = await instant.get<UserData>('/me');
 
+    console.log(data);
+
     return data;
   } catch (error) {
     throw new Error('Some error...', { cause: error });

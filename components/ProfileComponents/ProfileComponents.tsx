@@ -1,17 +1,10 @@
 'use client';
 
-import { FIVE_MINUTES } from '@/constant/constants';
 import ProfileField from './ProfileField/ProfileField';
-import { getUser } from '@/services/auth.services';
-import { useQuery } from '@tanstack/react-query';
+import { useFavorite } from '@/hooks/favoriteHook';
 
 const ProfileComponent = () => {
-  const { data, error, isLoading } = useQuery({
-    queryKey: ['me'],
-    queryFn: getUser,
-    staleTime: FIVE_MINUTES,
-    refetchOnMount: false,
-  });
+  const { data, error, isLoading } = useFavorite();
 
   if (isLoading) {
     return (
@@ -82,6 +75,9 @@ const ProfileComponent = () => {
 
           <ProfileField label='Резюме' value={resume} isLink />
         </div>
+
+        {/* favorites jobs */}
+        <div></div>
       </div>
     </main>
   );
