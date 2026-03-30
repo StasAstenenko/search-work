@@ -1,6 +1,6 @@
 'use client';
 
-import { getUser } from '@/services/auth.services';
+import { getUser, logoutService } from '@/services/auth.services';
 import Link from 'next/link';
 import { Button } from '../ui/button';
 import {
@@ -10,18 +10,36 @@ import {
   Settings,
   User as UserIcon,
   ChevronDown,
+  LogOut,
 } from 'lucide-react';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const Header = () => {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
+  const queryClient = useQueryClient();
 
   const { data } = useQuery({
     queryKey: ['me'],
     queryFn: getUser,
     refetchOnWindowFocus: false,
   });
+
+  const logoutMutation = useMutation({
+    mutationFn: logoutService,
+
+    onSuccess: () => {
+      queryClient.setQueryData(['me'], null);
+
+      router.push('/');
+    },
+  });
+
+  const handleSubmit = () => {
+    return logoutMutation.mutate();
+  };
 
   return (
     <header
@@ -65,7 +83,7 @@ const Header = () => {
       <div className='relative'>
         <Button
           onClick={() => setOpen(!open)}
-          className='flex items-center gap-2 px-4 py-2 rounded-full
+          className='flex items-center gap-2 px-4 py-2 rounded-full cursor-pointer
           bg-linear-to-r from-amber-500 to-orange-500 text-white
           shadow-lg hover:scale-105 transition-all duration-300'
         >
@@ -110,6 +128,14 @@ const Header = () => {
               <UserIcon size={16} />
               Профіль
             </Link>
+            <Button
+              className='flex items-center gap-2 px-3 py-2 rounded-xl cursor-pointer
+              hover:bg-orange-100 transition-all duration-200 bg-white text-black justify-start'
+              onClick={handleSubmit}
+            >
+              <LogOut size={16} />
+              Вихід
+            </Button>
           </ul>
         </div>
       </div>

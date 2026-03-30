@@ -121,7 +121,7 @@ const LoginComponent = () => {
             className='w-full py-2 rounded-xl font-medium 
             bg-linear-to-r from-amber-500 to-orange-500 text-white 
             shadow-lg transition-all duration-300
-            hover:scale-105 hover:shadow-xl active:scale-95'
+            hover:scale-105 hover:shadow-xl active:scale-95 cursor-pointer'
           >
             Увійти
           </button>

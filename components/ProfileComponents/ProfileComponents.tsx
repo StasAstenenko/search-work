@@ -1,5 +1,6 @@
 'use client';
 
+import FavoriteList from './FavoriteList/FavoriteList';
 import ProfileField from './ProfileField/ProfileField';
 import { useFavorite } from '@/hooks/favoriteHook';
 
@@ -77,7 +78,9 @@ const ProfileComponent = () => {
         </div>
 
         {/* favorites jobs */}
-        <div></div>
+        <div className='pt-4 border-t border-black/10'>
+          <FavoriteList data={data?.user?.favorites} />
+        </div>
       </div>
     </main>
   );

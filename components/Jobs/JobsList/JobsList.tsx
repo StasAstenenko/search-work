@@ -12,7 +12,7 @@ const JobsList = ({ results }: JobsListProps) => {
     max-w-7xl mx-auto animate-fadeIn'
     >
       {results?.map((el) => (
-        <li key={el.id}>
+        <li className='h-full' key={el.id}>
           <JobsCard result={el} />
         </li>
       ))}

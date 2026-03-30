@@ -151,7 +151,7 @@ const JobsComponent = ({ country, page }: JobsProps) => {
 
             <Button
               onClick={() => router.push(`/jobs/${country}/1`)}
-              className='w-full mt-4 rounded-xl bg-black text-white hover:bg-white hover:text-black border transition-all duration-300 hover:scale-105'
+              className='w-full cursor-pointer mt-4 rounded-xl bg-black text-white hover:bg-white hover:text-black border transition-all duration-300 hover:scale-105'
             >
               Скинути категорії
             </Button>

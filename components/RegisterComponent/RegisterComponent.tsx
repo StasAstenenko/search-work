@@ -209,7 +209,7 @@ const RegisterComponent = () => {
             type='submit'
             className='w-full py-2 rounded-xl font-medium 
             bg-linear-to-r from-amber-500 to-orange-500 text-white 
-            shadow-lg transition-all duration-300
+            shadow-lg transition-all duration-300 cursor-pointer
             hover:scale-105 hover:shadow-xl active:scale-95'
           >
             Зареєструватися

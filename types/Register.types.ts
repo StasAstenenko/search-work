@@ -1,3 +1,5 @@
+import { Favorite } from './Favorite.type';
+
 export interface LoginProps {
   email: string;
   password: string;
@@ -22,11 +24,5 @@ export interface User {
   age: number | null;
   gender: string | null;
   resumeUrl: string | null;
-  favorites: Favorites[] | null;
-}
-
-interface Favorites {
-  id: string;
-  jobId: string;
-  userId: string;
+  favorites: Favorite[] | null;
 }

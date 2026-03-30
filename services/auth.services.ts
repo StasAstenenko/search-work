@@ -28,11 +28,17 @@ export const loginService = async (data: LoginProps): Promise<UserData> => {
   }
 };
 
+export const logoutService = async () => {
+  try {
+    return await instant.post('/logout');
+  } catch (error) {
+    throw new Error('Some error...', { cause: error });
+  }
+};
+
 export const getUser = async (): Promise<UserData> => {
   try {
     const { data } = await instant.get<UserData>('/me');
-
-    console.log(data);
 
     return data;
   } catch (error) {

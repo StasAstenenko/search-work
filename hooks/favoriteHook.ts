@@ -42,5 +42,12 @@ export const useFavorite = (result?: Results) => {
     }
   };
 
-  return { toggleFavorite, data, error, isLoading, isFavorite };
+  return {
+    toggleFavorite,
+    data,
+    error,
+    isLoading,
+    isFavorite,
+    deleteFavoriteMutate,
+  };
 };
