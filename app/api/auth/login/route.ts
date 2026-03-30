@@ -1,7 +1,7 @@
 import { prisma } from '@/lib/prisma';
 import { createSupabaseServer } from '@/lib/server-supabase';
 import { LoginProps } from '@/types/Register.types';
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
   });
 
   if (error) {
-    return Response.json({ error: error.message }, { status: 400 });
+    return NextResponse.json({ error: error.message }, { status: 400 });
   }
 
   const user = data.user;
@@ -29,8 +29,8 @@ export async function POST(req: NextRequest) {
   });
 
   if (!userFromPrisma) {
-    return Response.json({ error: 'User not found' }, { status: 404 });
+    return NextResponse.json({ error: 'User not found' }, { status: 404 });
   }
 
-  return Response.json({ user: userFromPrisma });
+  return NextResponse.json({ user: userFromPrisma });
 }

@@ -1,5 +1,5 @@
 import { JOBS_APP_KEY, JOBS_ID } from '@/constant/constants';
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest) {
   const params = req.nextUrl.searchParams;
@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
   if (!res.ok) {
     const text = await res.text();
 
-    return Response.json(
+    return NextResponse.json(
       {
         error: 'Adzuna API error',
         status: res.status,
@@ -30,5 +30,5 @@ export async function GET(req: NextRequest) {
 
   const data = await res.json();
 
-  return Response.json(data);
+  return NextResponse.json(data);
 }
