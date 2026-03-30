@@ -3,6 +3,8 @@ import { createSupabaseServer } from '@/lib/server-supabase';
 import { LoginProps } from '@/types/Register.types';
 import { NextRequest } from 'next/server';
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: NextRequest) {
   const supabase = await createSupabaseServer();
 

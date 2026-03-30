@@ -1,6 +1,8 @@
 import { prisma } from '@/lib/prisma';
 import { createSupabaseServer } from '@/lib/server-supabase';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   const supabase = await createSupabaseServer();
 

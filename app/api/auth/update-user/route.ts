@@ -3,6 +3,8 @@ import { createSupabaseServer } from '@/lib/server-supabase';
 import { profileSchema, UpdateUser } from '@/validation/UpdateUser.validation';
 import { NextRequest, NextResponse } from 'next/server';
 
+export const dynamic = 'force-dynamic';
+
 export async function PATCH(req: NextRequest) {
   const body = (await req.json()) as UpdateUser;
   const supabase = await createSupabaseServer();
