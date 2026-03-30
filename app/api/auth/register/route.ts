@@ -8,8 +8,9 @@ export const dynamic = 'force-dynamic';
 export async function POST(req: NextRequest) {
   const supabase = await createSupabaseServer();
 
-  const { email, password, firstName, lastName } =
-    (await req.json()) as RegisterProps;
+  const body = (await req.json()) as RegisterProps;
+
+  const { email, firstName, lastName, password } = body;
 
   const { data, error } = await supabase.auth.signUp({
     email,
