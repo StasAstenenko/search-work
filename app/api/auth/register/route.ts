@@ -31,11 +31,11 @@ export async function POST(req: NextRequest) {
   const user = data.user;
 
   if (!user) {
-    return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    return NextResponse.json({ user: null }, { status: 200 });
   }
 
   if (!user.email) {
-    return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    return NextResponse.json({ user: null }, { status: 200 });
   }
 
   const userFromPrisma = await prisma.user.upsert({
