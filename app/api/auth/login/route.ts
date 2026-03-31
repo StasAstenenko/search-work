@@ -21,6 +21,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 400 });
   }
 
+  if (!data.user) {
+    return NextResponse.json({ user: null }, { status: 200 });
+  }
+
   const user = data.user;
 
   const userFromPrisma = await prisma.user.findUnique({
