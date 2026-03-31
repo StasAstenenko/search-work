@@ -10,7 +10,11 @@ export async function GET() {
   const { data, error } = await supabase.auth.getUser();
 
   if (error) {
-    return NextResponse.json({ error: error.message }, { status: 400 });
+    return NextResponse.json({ user: null }, { status: 200 });
+  }
+
+  if (!data.user) {
+    return NextResponse.json({ user: null }, { status: 200 });
   }
 
   const user = data.user;
