@@ -11,15 +11,15 @@ export async function PATCH(req: NextRequest) {
 
   const { data } = await supabase.auth.getUser();
 
-  if (!data) {
+  if (!data.user) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
   const user = data.user;
 
-  const validated = profileSchema.parse(body);
+  const validated = profileSchema.safeParse(body);
 
-  if (!validated) {
+  if (!validated.success) {
     return NextResponse.json(
       { error: 'Невірно вказані поля' },
       { status: 400 }
