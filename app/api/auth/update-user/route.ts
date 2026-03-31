@@ -18,9 +18,9 @@ export async function PATCH(req: NextRequest) {
 
   const user = data.user;
 
-  const validated = profileSchema.safeParse(body);
+  const validated = profileSchema.parse(body);
 
-  if (!validated.success) {
+  if (!validated) {
     return NextResponse.json(
       { error: 'Невірно вказані поля' },
       { status: 400 }
